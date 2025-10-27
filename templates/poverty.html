@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>India's Poverty Navigation Using AI</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+/* Floating Shapes Background */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b0b1e;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100vh;
+}
+
+#shapes-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* allows scrolling */
+    overflow: visible;
+    z-index: 0; /* behind content */
+}
+
+.shape {
+    position: absolute;
+    border: 2px solid #fff;
+    opacity: 0.2;
+    animation: floatShape linear infinite;
+}
+
+.shape.square { width: 30px; height: 30px; }
+.shape.circle { border-radius: 50%; width: 25px; height: 25px; }
+.shape.triangle {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid #fff;
+    background: transparent;
+}
+
+/* Organic floating animation */
+@keyframes floatShape {
+    0% { transform: translate(0,0) rotate(0deg); opacity: 0; }
+    25% { transform: translate(20px,-50px) rotate(45deg); opacity: 0.3; }
+    50% { transform: translate(-15px,-100px) rotate(90deg); opacity: 0.5; }
+    75% { transform: translate(10px,-150px) rotate(135deg); opacity: 0.3; }
+    100% { transform: translate(0,-200px) rotate(180deg); opacity: 0; }
+}
+
+/* Content overlay */
+.content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 2rem;
+    text-align: center;
+    color: #fff;
+}
+
+form {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+input[type="text"] {
+    width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #302c9d;
+    color: #fefeff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.results-container, .charts-wrapper, .chart-container {
+    position: relative;
+    z-index: 10;
+}
+
+/* Cards */
+.results-container {
+    width: 90%;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+.result-card {
+    background: rgba(255,255,255,0.9);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding: 22px;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-left: 5px solid #1f3a70;
+}
+
+/* Hover effect with lighter color */
+.result-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    background-color: #e8f0fe;
+}
+
+.result-card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #1f3a70;
+}
+
+.metric {
+    margin: 10px 0;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+    height: 18px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    line-height: 18px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding-left: 6px;
+    box-sizing: border-box;
+}
+
+.headcount { background-color: #e74c3c; }
+.rural { background-color: #27ae60; }
+.urban { background-color: #2980b9; }
+.fii { background-color: #f39c12; }
+
+.score {
+    font-weight: 600;
+    color: #27ae60;
+    font-size: 14px;
+}
+
+.charts-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1100px;
+    margin-bottom: 50px;
+}
+
+.chart-container {
+    flex: 1 1 400px;
+    height: 400px;
+    background-color: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media (max-width: 900px) {
+    .charts-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .chart-container { height: 300px; }
+}
+
+@media (max-width: 600px) {
+    input[type="text"] { width: 90%; }
+    .results-container { width: 95%; }
+    .chart-container { width: 90%; height: 300px; }
+}
+
+/* Back to Dashboard Link */
+a {
+    color: #fefeff;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 20px 0;
+    font-weight: 500;
+}
+a:hover {
+    text-decoration: underline;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Floating Shapes -->
+<div id="shapes-container"></div>
+
+<div class="content">
+<h1><i class="fas fa-search"></i> India's Poverty Navigation Using AI</h1>
+<form method="post" action="/search_poverty">
+    <input type="text" name="query" placeholder="Enter your query..." required>
+    <button type="submit">Search</button>
+</form>
+{% if not results %}
+<a href="/">Back to Dashboard</a>
+{% endif %}
+
+{% if results %}
+<div class="results-container">
+    {% for r in results %}
+    <div class="result-card">
+        <h3>{{ r.State }}</h3>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-chart-line"></i> Headcount Ratio (%)</div>
+            <div class="progress-bar">
+                <div class="progress headcount" style="width:{{ r['Headcount Ratio (%)'] | float }}%;">{{ r['Headcount Ratio (%)'] }}%</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-home"></i> Rural Expenditure</div>
+            <div class="progress-bar">
+                <div class="progress rural" style="width:{{ r['Rural 2011-12 Poverty Expenditure Per Capita'] | float / 1200 * 100 }}%;">₹{{ r['Rural 2011-12 Poverty Expenditure Per Capita'] }}</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-city"></i> Urban Expenditure</div>
+            <div class="progress-bar">
+                <div class="progress urban" style="width:{{ r['Urban 2011-12 Poverty Expenditure Per Capita'] | float / 1200 * 100 }}%;">₹{{ r['Urban 2011-12 Poverty Expenditure Per Capita'] }}</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-trophy"></i> FII Rank</div>
+            <div class="progress-bar">
+                <div class="progress fii" style="width:{{ r['FII Rank'] | float * 100 }}%;">{{ r['FII Rank'] }}</div>
+            </div>
+        </div>
+        <div class="metric" style="margin-top:10px;">
+            <i class="fas fa-star"></i> Relevance Score: <span class="score">{{ r['Similarity'] }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="charts-wrapper">
+    <div class="chart-container">
+        <canvas id="headcountRuralChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="headcountUrbanChart"></canvas>
+    </div>
+</div>
+<a href="/">Back to Dashboard</a>
+
+<script>
+const states = [];
+const headcount = [];
+const ruralExp = [];
+const urbanExp = [];
+
+{% for r in results %}
+states.push("{{ r.State }}");
+headcount.push({{ r['Headcount Ratio (%)'] | float }});
+ruralExp.push({{ r['Rural 2011-12 Poverty Expenditure Per Capita'] | float }});
+urbanExp.push({{ r['Urban 2011-12 Poverty Expenditure Per Capita'] | float }});
+{% endfor %}
+
+const colors = ['#e74c3c','#27ae60','#2980b9','#f39c12','#8e44ad','#3498db','#16a085','#f1c40f','#d35400','#2c3e50'];
+
+new Chart(document.getElementById('headcountRuralChart'), {
+    type: 'bar',
+    data: {
+        labels: states,
+        datasets: [
+            { label: 'Headcount (%)', data: headcount, backgroundColor: '#e74c3c' },
+            { label: 'Rural Expenditure', data: ruralExp, backgroundColor: '#27ae60' }
+        ]
+    },
+    options: { 
+        responsive: true, 
+        plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Headcount vs Rural Expenditure' } }, 
+        scales: { y: { beginAtZero: true }, x: { title: { display: true, text: 'States' } } } 
+    }
+});
+
+new Chart(document.getElementById('headcountUrbanChart'), {
+    type: 'bar',
+    data: {
+        labels: states,
+        datasets: [
+            { label: 'Headcount (%)', data: headcount, backgroundColor: '#e74c3c' },
+            { label: 'Urban Expenditure', data: urbanExp, backgroundColor: '#2980b9' }
+        ]
+    },
+    options: { 
+        responsive: true, 
+        plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Headcount vs Urban Expenditure' } }, 
+        scales: { y: { beginAtZero: true }, x: { title: { display: true, text: 'States' } } } 
+    }
+});
+</script>
+
+{% endif %}
+</div>
+
+<script>
+// Floating Shapes JS
+const shapesContainer = document.getElementById('shapes-container');
+const shapeTypes = ['square', 'circle', 'triangle'];
+const maxShapes = 25;
+
+for(let i=0; i<maxShapes; i++){
+    const shape = document.createElement('div');
+    const type = shapeTypes[Math.floor(Math.random()*shapeTypes.length)];
+    shape.classList.add('shape', type);
+
+    shape.style.left = Math.random()*100 + 'vw';
+    shape.style.top = Math.random()*100 + 'vh';
+    shape.style.animationDuration = (10 + Math.random()*20) + 's';
+    shape.style.animationDelay = (Math.random()*10) + 's';
+    shape.style.transform = `rotate(${Math.random()*360}deg) scale(${0.5 + Math.random()})`;
+    shapesContainer.appendChild(shape);
+}
+</script>
+
+</body>
+</html>

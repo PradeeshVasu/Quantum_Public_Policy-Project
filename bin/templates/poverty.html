@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>India's Poverty Navigation Using AI</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #e0e7f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+    }
+
+    h1 {
+        margin-top: 40px;
+        color: #1f3a70;
+        text-align: center;
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    form {
+        margin: 30px 0;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+        width: 400px;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        transition: 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #1f3a70;
+        outline: none;
+        box-shadow: 0 0 8px rgba(31, 58, 112, 0.3);
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        background-color: #1f3a70;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #35539e;
+    }
+
+    .results-container {
+        width: 90%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 50px;
+    }
+
+    .result-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        padding: 22px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+        border-left: 5px solid #1f3a70;
+    }
+
+    .result-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+
+    .result-card h3 {
+        margin-top: 0;
+        font-size: 20px;
+        color: #1f3a70;
+    }
+
+    .metric {
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .progress-bar {
+        background-color: #eee;
+        border-radius: 8px;
+        height: 18px;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        line-height: 18px;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        padding-left: 6px;
+        box-sizing: border-box;
+    }
+
+    .headcount { background-color: #e74c3c; }
+    .rural { background-color: #27ae60; }
+    .urban { background-color: #2980b9; }
+
+    .fii { color: #e67e22; font-weight: 600; }
+    .cfii { color: #8e44ad; font-weight: 600; }
+    .cdi { color: #16a085; font-weight: 600; }
+
+    .score {
+        font-weight: 600;
+        color: #27ae60;
+        font-size: 14px;
+    }
+
+    /* Flex wrapper for charts */
+    .charts-wrapper {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 90%;
+        max-width: 1100px;
+        margin-bottom: 50px;
+    }
+
+    .chart-container {
+        flex: 1 1 400px;
+        height: 400px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    @media (max-width: 900px) {
+        .charts-wrapper {
+            flex-direction: column;
+            align-items: center;
+        }
+        .chart-container { height: 300px; }
+    }
+
+    @media (max-width: 600px) {
+        input[type="text"] { width: 90%; }
+        .results-container { width: 95%; }
+        .chart-container { width: 90%; height: 300px; }
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1><i class="fas fa-search"></i> India's Poverty Navigation Using AI</h1>
+<form method="post" action="/search_poverty">
+    <input type="text" name="query" placeholder="Enter your query..." required>
+    <button type="submit">Search</button>
+</form>
+
+{% if results %}
+<div class="results-container">
+    {% for r in results %}
+    <div class="result-card">
+        <h3>{{ r.State }}</h3>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-chart-line"></i> Headcount Ratio (%)</div>
+            <div class="progress-bar">
+                <div class="progress headcount" style="width:{{ r['Headcount Ratio (%)'] | float }}%;">{{ r['Headcount Ratio (%)'] }}%</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-seedling"></i> 2011 Rural %</div>
+            <div class="progress-bar">
+                <div class="progress rural" style="width:{{ r['2011 rural percentage'] | float }}%;">{{ r['2011 rural percentage'] }}%</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-home"></i> Rural Expenditure</div>
+            <div class="progress-bar">
+                <div class="progress rural" style="width:{{ r['Rural 2011-12 Poverty Expenditure Per Capita'] | float }}%;">₹{{ r['Rural 2011-12 Poverty Expenditure Per Capita'] }}</div>
+            </div>
+        </div>
+        <div class="metric">
+            <div class="metric-label"><i class="fas fa-city"></i> Urban Expenditure</div>
+            <div class="progress-bar">
+                <div class="progress urban" style="width:{{ r['Urban 2011-12 Poverty Expenditure Per Capita'] | float }}%;">₹{{ r['Urban 2011-12 Poverty Expenditure Per Capita'] }}</div>
+            </div>
+        </div>
+        <div class="metric">
+            <span class="metric-label"><i class="fas fa-trophy"></i> FII Rank:</span> <span class="fii">{{ r['FII Rank'] }}</span> | 
+            <span class="metric-label"><i class="fas fa-coins"></i> CFII:</span> <span class="cfii">{{ r['CFII'] }}</span> | 
+            <span class="metric-label"><i class="fas fa-chart-pie"></i> CDI:</span> <span class="cdi">{{ r['CDI'] }}</span>
+        </div>
+        <div class="metric" style="margin-top:10px;">
+            <i class="fas fa-star"></i> Relevance Score: <span class="score">{{ r['Similarity'] }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Charts side by side -->
+<div class="charts-wrapper">
+    <div class="chart-container">
+        <canvas id="povertyPieChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="povertyBarChart"></canvas>
+    </div>
+</div>
+
+<script>
+const states = [];
+const headcount = [];
+const fiiRank = [];
+{% for r in results %}
+states.push("{{ r.State }}");
+headcount.push({{ r['Headcount Ratio (%)'] | float }});
+fiiRank.push({{ r['FII Rank'] | float }});
+{% endfor %}
+
+// Pie Chart (Headcount Ratio)
+const pieColors = [
+    '#2980b9', '#27ae60', '#f39c12', '#e74c3c', '#8e44ad', '#3498db', '#16a085', '#f1c40f', '#d35400', '#2c3e50'
+];
+const pieCtx = document.getElementById('povertyPieChart').getContext('2d');
+new Chart(pieCtx, {
+    type: 'pie',
+    data: { labels: states, datasets: [{ data: headcount, backgroundColor: pieColors }] },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Headcount Ratio Distribution by State', font: { size: 18 } } } }
+});
+
+// Bar Chart (FII Rank)
+const barColors = pieColors.slice(0, states.length); // unique colors
+const barCtx = document.getElementById('povertyBarChart').getContext('2d');
+new Chart(barCtx, {
+    type: 'bar',
+    data: { labels: states, datasets: [{ label: 'FII Rank', data: fiiRank, backgroundColor: barColors }] },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false }, title: { display: true, text: 'FII Rank by State', font: { size: 18 } } },
+        scales: { 
+            y: { beginAtZero: true, title: { display: true, text: 'FII Rank' } },
+            x: { title: { display: true, text: 'States' } }
+        }
+    }
+});
+</script>
+
+
+{% endif %}
+</body>
+</html>
+

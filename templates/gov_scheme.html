@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PolicyNav - Smart Policy Search</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(135deg, #1c1f29, #1f242d);
+    }
+
+    .content {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 50px;
+    }
+
+    h1 {
+        margin-top: 40px;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 0.5px;
+        font-size: 2rem;
+        color: #f5f5f5;
+    }
+
+    h1 i {
+        margin-right: 10px; /* space between icon and text */
+        color: #2563eb;     /* optional: match your theme */
+    }
+
+    form {
+        margin: 25px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    input[type="text"] {
+        width: 400px;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #a4a3a3;
+        transition: 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #2563eb;
+        outline: none;
+        box-shadow: 0 0 5px rgba(14, 49, 126, 0.3);
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        background-color: #2563eb;
+        color: #f4f4f4;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    button:hover { background-color: #1e40af; }
+
+    .results-container {
+        width: 90%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 50px;
+        align-items: start;
+    }
+
+    .result-card {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #111;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        padding: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+    }
+
+    .result-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    .scheme-title { font-size: 18px; color: #1e3a8a; font-weight: 600; margin-bottom: 5px; }
+    .meta { font-size: 13px; color: #555; margin-bottom: 10px; }
+    .badge { background: #e0e7ff; color: #1e40af; font-weight: 600; border-radius: 6px; padding: 4px 8px; font-size: 12px; margin-right: 6px; }
+    .score { font-weight: 600; color: #68e35d; }
+    .section { margin-top: 12px; background: #f1f5f9; padding: 10px 12px; border-radius: 8px; border-left: 4px solid #1e3a8a; }
+    .section h4 { margin: 0; font-size: 15px; color: #1e3a8a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .section p { margin-top: 8px; font-size: 14px; color: #121010; line-height: 1.5; display: none; }
+    .section.open p { display: block; }
+
+    .charts-container {
+        width: 90%;
+        max-width: 1100px;
+        display: flex;
+        gap: 20px;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .chart-box {
+        flex: 1 1 300px;
+        background: rgba(0,0,0,0.6);
+        padding: 15px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas { max-height: 350px; width: 100% !important; }
+
+    @media (max-width: 900px) { .charts-container { flex-direction: column; align-items: center; } }
+    @media (max-width: 600px) { input[type="text"] { width: 90%; } .results-container { width: 95%; } }
+
+    /* Back to Dashboard Link */
+    a {
+        color: #f4f4f4;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 20px 0;
+        font-weight: 500;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="content">
+    <h1><i class="fas fa-search"></i> Indian Government Scheme Navigation Using AI</h1>
+    <form method="post" action="/search_scheme">
+        <input type="text" name="query" placeholder="Search any government scheme or policy..." required>
+        <button type="submit">Search</button>
+    </form>
+    {% if not results %}
+    <a href="/">Back to Dashboard</a>
+    {% endif %}
+
+    {% if results %}
+    <div class="results-container">
+        {% for r in results %}
+        <div class="result-card">
+            <div class="scheme-title">{{ r.scheme_name }}</div>
+            <div class="meta">
+                <span class="badge">{{ r.schemeCategory }}</span>
+                <span class="badge">{{ r.level }}</span>
+                | Relevance: <span class="score">{{ r.score }}</span>
+            </div>
+            <div class="summary">{{ r.summary }}</div>
+
+            {% if r.eligibility %}<div class="section"><h4 onclick="toggleSection(this)">Eligibility ▼</h4><p>{{ r.eligibility }}</p></div>{% endif %}
+            {% if r.benefits %}<div class="section"><h4 onclick="toggleSection(this)">Benefits ▼</h4><p>{{ r.benefits }}</p></div>{% endif %}
+            {% if r.application %}<div class="section"><h4 onclick="toggleSection(this)">Application Process ▼</h4><p>{{ r.application }}</p></div>{% endif %}
+            {% if r.documents %}<div class="section"><h4 onclick="toggleSection(this)">Required Documents ▼</h4><p>{{ r.documents }}</p></div>{% endif %}
+            {% if r.tags %}<div class="section"><h4 onclick="toggleSection(this)">Tags ▼</h4><p>{{ r.tags }}</p></div>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-box"><canvas id="categoryChart"></canvas></div>
+        <div class="chart-box"><canvas id="levelChart"></canvas></div>
+    </div>
+    <a href="/">Back to Dashboard</a>
+    {% endif %}
+</div>
+
+<script>
+function toggleSection(el) { el.parentElement.classList.toggle('open'); }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+    "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+    "color": { "value": "#ffffff" },
+    "shape": { "type": "circle", "stroke": { "width": 0 }, "polygon": { "nb_sides": 5 } },
+    "opacity": { "value": 0.6, "random": true },
+    "size": { "value": 3, "random": true },
+    "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
+    "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" } },
+    "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+    "modes": { "repulse": { "distance": 100 }, "push": { "particles_nb": 4 } } },
+    "retina_detect": true
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+{% if results %}
+    const categories = [];
+    const levels = [];
+    {% for r in results %}
+        categories.push("{{ r.schemeCategory }}");
+        levels.push("{{ r.level }}");
+    {% endfor %}
+
+    const categoryCounts = {};
+    categories.forEach(c => categoryCounts[c] = (categoryCounts[c] || 0) + 1);
+    const ctxCat = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctxCat, {
+        type: 'bar',
+        data: { labels: Object.keys(categoryCounts), datasets: [{ label: 'Schemes per Category', data: Object.values(categoryCounts), backgroundColor: '#2563eb', borderRadius: 4 }] },
+        options: { responsive: true, plugins: { title: { display: true, text: 'Schemes by Category', color: '#fff', font: { size: 16 } }, legend: { display: false } }, scales: { x: { ticks: { color: '#fff' }, grid: { display: false } }, y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' }, beginAtZero: true } } }
+    });
+
+    const levelCounts = {};
+    levels.forEach(l => levelCounts[l] = (levelCounts[l] || 0) + 1);
+    const ctxLevel = document.getElementById('levelChart').getContext('2d');
+    new Chart(ctxLevel, {
+        type: 'doughnut',
+        data: { labels: Object.keys(levelCounts), datasets: [{ data: Object.values(levelCounts), backgroundColor: ['#fbbf24','#3b82f6','#10b981','#8b5cf6','#ef4444'], borderWidth: 1 }] },
+        options: { responsive: true, plugins: { legend: { labels: { color: '#fff' }, position: 'bottom' }, title: { display: true, text: 'Schemes by Level', color: '#fff', font: { size: 16 } } } }
+    });
+{% endif %}
+</script>
+
+</body>
+</html>
