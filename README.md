@@ -21,108 +21,184 @@ Users can query the system to discover **relevant education, poverty, and welfar
 
 ## ✨ Features
 
-✅ **Policy Search Engine** — Retrieve government policies using natural language
-⚡ **Quantum + Classical NLP** — Compare QML and TF-IDF retrievals
-🧭 **FastAPI Backend** — High-performance REST server
-🎨 **Interactive Frontend** — Jinja2 responsive templates
-📊 **Explainable Results** — Summaries, eligibility, application details
-🌐 **Modular Expansion** — Extendable to new datasets and models
-
----
-
-## 🖼️ Live Demo & Screenshots
-
-> Add your screenshots or demo GIFs inside an `assets/` or `docs/` folder.
-> Example layout shown below — replace image names with your own.
-
-| 🏠 Dashboard                       | 🎓 Education NLP                         | ⚛️ Quantum Education NLP                |
-| ---------------------------------- | ---------------------------------------- | ------------------------------------ |
-| ![Dashboard](images/index_page.png) | ![Education](images/education_policy.png) | ![Quantum](images\quantum_edu_policy.png) |
-
-| 💰 Poverty NLP                       | 🏛️ Government_Scheme NLP                  |                 
-| ------------------------------------ | ---------------------------------- | 
-| ![Poverty](images/poverty.png) | ![Scheme](images/government_scheme.png) | 
-
-
-
-## ⚙️ Installation & Setup
-
-```bash
-git clone https://github.com/PradeeshVasu/Quantum_Public_Policy-Project.git
-cd Quantum_Public_Policy-Project
-python -m venv venv
-venv\Scripts\activate          # Windows
-# or
-source venv/bin/activate       # macOS / Linux
-pip install -r requirements.txt
-uvicorn app:app --reload
-```
-
-Visit **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in your browser.
-
----
-
-## 🧠 Model Overview
-
-| Model             | Description                                     | Technique                              |
-| ----------------- | ----------------------------------------------- | -------------------------------------- |
-| **Classical NLP** | Text-based recommendation                       | TF-IDF + Cosine Similarity             |
-| **Quantum NLP**   | Quantum state embedding for semantic similarity | PennyLane (AmplitudeEmbedding + QNode) |
-| **Poverty Model** | Socioeconomic analysis                          | TF-IDF + NLP                           |
-| **Scheme Model**  | Government welfare search                       | NLP tagging + metadata extraction      |
+✅ **Policy Search Engine** — Retrieve government policies and schemes using natural language.
+⚡ **Quantum + Classical NLP** — Compare QML and traditional TF-IDF based retrievals.
+🧭 **FastAPI Backend** — High-performance REST server with HTML integration.
+🎨 **Interactive Frontend** — Jinja2-based responsive web pages for each model.
+📊 **Explainable Results** — Shows summaries, benefits, eligibility, and application details.
+🌐 **Modular Expansion** — Easily extendable to new datasets and models.
 
 ---
 
 ## 🧩 Folder Structure
 
 <details>
-<summary>Click to expand</summary>
+<summary>📂 Click to view full structure</summary>
 
 ```bash
 Quantum_Public_Policy-Project/
-├── app/                     → FastAPI backend
-├── templates/               → HTML UIs (education, poverty, quantum, scheme)
-├── static/                  → CSS/JS assets
-├── *tfidf_matrix.pkl        → Saved TF-IDF vectors
-├── *vectorizer.pkl          → Trained vectorizers
-├── requirements.txt
-├── README.md
-└── venv/
+│
+├── static/                              → CSS, JS, and static assets
+│
+├── templates/                           → HTML (Jinja2) templates
+│   ├── index.html                       → Main dashboard
+│   ├── education.html                   → Education policy model UI
+│   ├── poverty.html                     → Poverty analysis UI
+│   ├── gov_scheme.html                  → Government scheme interface
+│   └── quantum_edu.html                 → Quantum-enhanced policy view
+│
+├── app/                                 → FastAPI backend logic
+│
+├── edu_quantum/                         → Quantum education model
+├── ind_gov_scheme.NLP/                  → Government scheme NLP logic
+├── infosys_nlp/                         → Education NLP engine
+├── infosys_nlp_poverty/                 → Poverty NLP engine
+│
+├── education_policies/                  → Raw education dataset
+├── education_policies_quantum/          → Quantum education dataset
+├── ind_poverty/                         → Poverty dataset
+│
+├── train_policies/                      → Training data for education model
+├── train_policies_quantum/              → Quantum training data
+├── train_poverty/                       → Poverty model training data
+├── train_scheme/                        → Government scheme training data
+│
+├── test_policies/                       → Testing data (education)
+├── test_policies_quantum/               → Testing data (quantum)
+├── test_poverty/                        → Testing data (poverty)
+├── test_scheme/                         → Testing data (schemes)
+│
+├── updated_data/                        → Cleaned and preprocessed datasets
+│
+├── policy_tfidf_matrix.pkl
+├── policy_tfidf_matrix_quantum.pkl
+├── policy_vectorizer.pkl
+├── policy_vectorizer_quantum.pkl
+├── poverty_tfidf_matrix.pkl
+├── poverty_vectorizer.pkl
+├── scheme_tfidf_matrix.pkl
+├── scheme_vectorizer.pkl
+│
+├── requirements.txt                     → Python dependencies
+├── README.md                            → Project documentation
+├── .gitattributes                       → Git configuration
+└── venv/                                → Virtual environment
 ```
 
 </details>
 
 ---
 
-## 🧾 Example Flow
+## ⚙️ Installation & Setup
 
-1️⃣ User query → “Educational policies for rural development”
-2️⃣ TF-IDF + Quantum vectors generated
-3️⃣ Similarities computed (cosine + quantum kernel)
-4️⃣ Top matching policies returned with explanations
+### 🧾 1. Clone the Repository
+
+```bash
+git clone https://github.com/PradeeshVasu/Quantum_Public_Policy-Project.git
+cd Quantum_Public_Policy-Project
+```
+
+### 🧱 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+# Activate it
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+```
+
+### 📦 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 🚀 4. Run the FastAPI Server
+
+```bash
+uvicorn app:app --reload
+```
+
+### 🌐 5. Open the App
+
+Visit → [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## 🧠 Models Used
+
+| 🧩 Model Type     | ⚙️ Description                                  | 🔬 Technique                             |
+| ----------------- | ----------------------------------------------- | ---------------------------------------- |
+| **Classical NLP** | Text-based policy recommendation                | TF-IDF + Cosine Similarity               |
+| **Quantum NLP**   | Quantum state embedding for semantic similarity | PennyLane (AmplitudeEmbedding + QNode)   |
+| **Poverty Model** | Socioeconomic indicators & data analysis        | TF-IDF + NLP                             |
+| **Scheme Model**  | Searchable government welfare schemes           | NLP with tagging and metadata extraction |
+
+---
+
+## 💻 Frontend Overview
+
+Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
+
+* 🏠 **index.html** → Central dashboard
+* 🎓 **education.html** → Classical policy model
+* 💡 **quantum_edu.html** → Quantum-enhanced model
+* 💰 **poverty.html** → Poverty analytics
+* 🏛️ **gov_scheme.html** → Scheme-based recommendations
+
+Each page dynamically renders FastAPI results using Jinja2 templates.
+
+---
+
+## 📦 Dependencies
+
+| Library               | Purpose                    |
+| --------------------- | -------------------------- |
+| **FastAPI**           | Backend web framework      |
+| **Uvicorn**           | ASGI server                |
+| **Scikit-learn**      | TF-IDF, similarity metrics |
+| **Pandas**, **NumPy** | Data processing            |
+| **PennyLane**         | Quantum circuit simulation |
+| **Joblib**            | Model persistence          |
+| **Jinja2**            | HTML templating            |
+
+---
+
+## 🔮 Example Workflow
+
+1️⃣ User enters: `"Educational policies for rural development"`
+2️⃣ Query is vectorized using **TF-IDF**.
+3️⃣ Similarity scores are computed via **Cosine Similarity** and **Quantum Kernel Circuits**.
+4️⃣ Top matching policies or schemes are displayed with summaries and metadata.
+5️⃣ Results appear in **Education**, **Poverty**, or **Quantum** tabs accordingly.
 
 ---
 
 ## 🚀 Future Roadmap
 
-* 🤖 **LLM integration** (LangChain / GPT)
-* 🌏 **Multilingual policy search**
-* 📊 **Impact visualization dashboard**
+* 🤖 **Integrate LLMs (LangChain / GPT) for deeper Q&A**
+* 🌏 **Add multilingual support for Indian languages**
+* 📊 **Dashboard visualization for impact scores**
+* 🧾 **Model performance analytics**
 * 🧠 **Hybrid Quantum-Classical embeddings**
-* 🧾 **Performance analytics module**
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Author & Contact
 
-**Pradeesh Vasu**
-📧 [pradeeshvasu22@gmail.com](mailto:pradeeshvasu22@gmail.com)
-💼 [linkedin.com/in/pradeesh-vasu-03486b319](https://www.linkedin.com/in/pradeesh-vasu-03486b319)
-🐙 [github.com/PradeeshVasu](https://github.com/PradeeshVasu)
+**👤 Developer:** *Pradeesh Vasu*
+📧 **Email:** [pradeeshvasu22@gmail.com](mailto:pradeeshvasu22@gmail.com)
+💼 **LinkedIn:** [linkedin.com/in/pradeesh-vasu-03486b319](https://www.linkedin.com/in/pradeesh-vasu-03486b319)
+🐙 **GitHub:** [github.com/PradeeshVasu](https://github.com/PradeeshVasu)
 
 ---
 
 ## 🏁 License
 
-Licensed under the **MIT License** — free for use and modification with attribution.
+📝 Licensed under the **MIT License** — Free to use, modify, and distribute with attribution.
 
+---
+
+Would you like me to **add visual GIFs or screenshots (UI preview + search demo)** section next — ideal for making your GitHub page look like a polished open-source project (e.g., badges → visuals → setup → models)?
