@@ -188,9 +188,9 @@ Each page dynamically renders FastAPI results using Jinja2 templates.
 
 ## 👨‍💻 Author & Contact
 
-**👤 Developer:** *Pradeesh Vasu*
-📧 **Email:** [pradeeshvasu22@gmail.com](mailto:pradeeshvasu22@gmail.com)
-💼 **LinkedIn:** [linkedin.com/in/pradeesh-vasu-03486b319](https://www.linkedin.com/in/pradeesh-vasu-03486b319)
+**👤 Developer:** *Pradeesh Vasu*                              
+📧 **Email:** [pradeeshvasu22@gmail.com](mailto:pradeeshvasu22@gmail.com)                                  
+💼 **LinkedIn:** [linkedin.com/in/pradeesh-vasu-03486b319](https://www.linkedin.com/in/pradeesh-vasu-03486b319)                                                    
 🐙 **GitHub:** [github.com/PradeeshVasu](https://github.com/PradeeshVasu)
 
 ---
@@ -201,4 +201,4 @@ Each page dynamically renders FastAPI results using Jinja2 templates.
 
 ---
 
-Would you like me to **add visual GIFs or screenshots (UI preview + search demo)** section next — ideal for making your GitHub page look like a polished open-source project (e.g., badges → visuals → setup → models)?
+
