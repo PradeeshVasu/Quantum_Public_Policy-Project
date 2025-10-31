@@ -150,14 +150,19 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 
   ## Project Working Prototye
   
-<img width="1899" height="1010" alt="Screenshot 2025-10-30 135037" src="https://github.com/user-attachments/assets/7d6bae59-8bee-4b10-8c4a-d58f7d070508" /> 
-
+  ### Dashboard
 <img width="1822" height="1056" alt="Screenshot 2025-10-30 135822" src="https://github.com/user-attachments/assets/12c174c1-2f80-4e9d-bb3e-a3d6f117a679" />
 
+  ### Education_Policy NLP 
+<img width="1899" height="1010" alt="Screenshot 2025-10-30 135037" src="https://github.com/user-attachments/assets/7d6bae59-8bee-4b10-8c4a-d58f7d070508" /> 
+
+### Indian_Government_Scheme NLP
 <img width="1820" height="1037" alt="Screenshot 2025-10-30 190217" src="https://github.com/user-attachments/assets/156c5827-bc78-4870-a76b-fcba5c0d6e2f" />
 
+### Poverty_IN_India NLP
 <img width="1853" height="1030" alt="Screenshot 2025-10-30 135924" src="https://github.com/user-attachments/assets/53ad1252-c382-4e28-91c0-9c93b0b9e67c" />
 
+### Quantum_Education_Policy NLP
 <img width="1844" height="1040" alt="Screenshot 2025-10-30 140149" src="https://github.com/user-attachments/assets/8459c727-4fdb-48fd-af86-1df4f975a623" />
 
 Each page dynamically renders FastAPI results using Jinja2 templates.
