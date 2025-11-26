@@ -156,7 +156,13 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 
 
   ### Education_Policy NLP 
-  
+  <img width="1908" height="1040" alt="Screenshot 2025-11-26 222922" src="https://github.com/user-attachments/assets/13882ed7-962b-4597-915d-ed62c27dab9b" />
+<img width="1879" height="1039" alt="Screenshot 2025-11-26 223322" src="https://github.com/user-attachments/assets/e80188ea-2329-4343-9e22-f152ae616932" />
+
+<img width="1880" height="1043" alt="Screenshot 2025-11-26 223334" src="https://github.com/user-attachments/assets/cef9e84d-674b-4c64-956f-45357a62160d" />
+
+
+
 <img width="1820" height="1037" alt="Screenshot 2025-10-30 190217" src="https://github.com/user-attachments/assets/156c5827-bc78-4870-a76b-fcba5c0d6e2f" />
 
 ### Indian_Government_Scheme NLP
