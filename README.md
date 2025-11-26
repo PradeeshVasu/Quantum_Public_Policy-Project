@@ -161,18 +161,18 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 
 <img width="1880" height="1043" alt="Screenshot 2025-11-26 223334" src="https://github.com/user-attachments/assets/cef9e84d-674b-4c64-956f-45357a62160d" />
 
-
-
-<img width="1820" height="1037" alt="Screenshot 2025-10-30 190217" src="https://github.com/user-attachments/assets/156c5827-bc78-4870-a76b-fcba5c0d6e2f" />
-
 ### Indian_Government_Scheme NLP
+<img width="1901" height="1035" alt="Screenshot 2025-11-26 222948" src="https://github.com/user-attachments/assets/858e68fb-e318-4cdb-8bd3-226cd359e535" />
 
 <img width="1822" height="1056" alt="Screenshot 2025-10-30 135822" src="https://github.com/user-attachments/assets/12c174c1-2f80-4e9d-bb3e-a3d6f117a679" />
 <img width="1883" height="1041" alt="Screenshot 2025-11-26 220718" src="https://github.com/user-attachments/assets/fe749551-8310-4856-b0e6-d5d56dc7e7b4" />
 
 ### Poverty_IN_India NLP
+<img width="1897" height="1034" alt="Screenshot 2025-11-26 223111" src="https://github.com/user-attachments/assets/e622f2bb-c98e-456e-aa71-648a203dde49" />
 
-<img width="1853" height="1030" alt="Screenshot 2025-10-30 135924" src="https://github.com/user-attachments/assets/53ad1252-c382-4e28-91c0-9c93b0b9e67c" />
+<img width="1881" height="1036" alt="Screenshot 2025-11-26 223139" src="https://github.com/user-attachments/assets/b78e07fc-4709-42fb-9cf1-2568e4c07547" />
+<img width="1888" height="1036" alt="Screenshot 2025-11-26 223152" src="https://github.com/user-attachments/assets/fd50db07-9efc-4d8b-9351-bb458436dbdc" />
+
 
 ### Quantum_Education_Policy NLP
 
