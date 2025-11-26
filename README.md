@@ -154,7 +154,7 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 
 <img width="1912" height="1045" alt="Screenshot 2025-11-26 220839" src="https://github.com/user-attachments/assets/157b3195-ca72-4114-a3b3-7ca8ec318b6f" />
 
-  **The users can access the models by selecting the buttons on the "Dashboard"**
+ * **The users can access the models by selecting the buttons on the "Dashboard"**
   
 ### Education_Policy NLP 
   <img width="1908" height="1040" alt="Screenshot 2025-11-26 222922" src="https://github.com/user-attachments/assets/13882ed7-962b-4597-915d-ed62c27dab9b" />
