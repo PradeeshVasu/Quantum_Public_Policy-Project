@@ -151,8 +151,7 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
   ## Project Working Prototye
   
   ### Dashboard
-  
-<img width="1899" height="1010" alt="Screenshot 2025-10-30 135037" src="https://github.com/user-attachments/assets/7d6bae59-8bee-4b10-8c4a-d58f7d070508" /> 
+
 <img width="1912" height="1045" alt="Screenshot 2025-11-26 220839" src="https://github.com/user-attachments/assets/157b3195-ca72-4114-a3b3-7ca8ec318b6f" />
 
 
