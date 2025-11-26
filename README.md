@@ -153,6 +153,8 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
   ### Dashboard
   
 <img width="1899" height="1010" alt="Screenshot 2025-10-30 135037" src="https://github.com/user-attachments/assets/7d6bae59-8bee-4b10-8c4a-d58f7d070508" /> 
+<img width="1912" height="1045" alt="Screenshot 2025-11-26 220839" src="https://github.com/user-attachments/assets/157b3195-ca72-4114-a3b3-7ca8ec318b6f" />
+
 
   ### Education_Policy NLP 
   
@@ -161,6 +163,7 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 ### Indian_Government_Scheme NLP
 
 <img width="1822" height="1056" alt="Screenshot 2025-10-30 135822" src="https://github.com/user-attachments/assets/12c174c1-2f80-4e9d-bb3e-a3d6f117a679" />
+<img width="1883" height="1041" alt="Screenshot 2025-11-26 220718" src="https://github.com/user-attachments/assets/fe749551-8310-4856-b0e6-d5d56dc7e7b4" />
 
 ### Poverty_IN_India NLP
 
