@@ -175,8 +175,10 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 
 
 ### Quantum_Education_Policy NLP
+<img width="1913" height="1038" alt="Screenshot 2025-11-26 223210" src="https://github.com/user-attachments/assets/7112c633-0ba3-4f7a-bd2b-b5103e7c2de0" />
 
 <img width="1844" height="1040" alt="Screenshot 2025-10-30 140149" src="https://github.com/user-attachments/assets/8459c727-4fdb-48fd-af86-1df4f975a623" />
+<img width="1887" height="1035" alt="Screenshot 2025-11-26 223226" src="https://github.com/user-attachments/assets/8d3281dc-e3b9-41db-ad65-1ec676b2d5c5" />
 
 Each page dynamically renders FastAPI results using Jinja2 templates.
 
