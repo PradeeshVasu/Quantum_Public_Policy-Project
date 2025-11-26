@@ -148,7 +148,7 @@ Built using **HTML**, **CSS**, and **Jinja2**, the frontend includes:
 * 💰 **poverty.html** → Poverty analytics
 * 🏛️ **gov_scheme.html** → Scheme-based recommendations
 
-  ## Project Working Prototye
+  ## ✨ Project Working Prototye
   
   ### Dashboard
 
